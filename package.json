@@ -1,5 +1,5 @@
 {
-  "name": "job-hunter-backend",
+  "name": "job-hunter-resume-builder",
   "version": "2.0.0",
   "main": "src/app.js",
   "scripts": {

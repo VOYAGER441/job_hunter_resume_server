@@ -1,6 +1,5 @@
 import express from "express";
-
-
+import routerResume from "./resume.route";
 
 const router= express.Router();
 
@@ -9,6 +8,6 @@ const router= express.Router();
 // system routes
 // ###############################################
 
-
+router.use("/resume", routerResume);
 
 export default router;

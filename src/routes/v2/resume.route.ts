@@ -8,6 +8,6 @@ const router = express.Router();
 // for resumes
 // ###############################################
 
-router.get("/:resumeId", apiErrorHandler(resumeController.generateResume));
+router.get("/generate/:resumeId", apiErrorHandler(resumeController.generateResume));
 
 export default router;
