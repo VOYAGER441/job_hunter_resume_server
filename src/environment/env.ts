@@ -35,3 +35,8 @@ export const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || "30d
 // job sources
 export const THEMUSE_API_URL = process.env.THEMUSE_API_URL;
 export const REMOTEOK_API_URL = process.env.REMOTEOK_API_URL;
+
+
+// LLM
+export const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
+export const MISTRAL_MODEL_NAME = process.env.MISTRAL_MODEL_NAME;

@@ -31,7 +31,9 @@
     "mongoose": "^8.20.4",
     "node-appwrite": "^21.1.0",
     "node-cron": "^3.0.3",
+    "puppeteer": "^25.1.0",
     "run": "^1.5.0",
+    "sanitize-html": "^2.17.5",
     "uuid": "^10.0.0",
     "winston": "^3.19.0",
     "winston-daily-rotate-file": "^5.0.0"
@@ -43,6 +45,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.19.1",
     "@types/node-cron": "^3.0.11",
+    "@types/sanitize-html": "^2.16.1",
     "@types/uuid": "^10.0.0",
     "install": "^0.13.0",
     "nodemon": "^3.1.7",
