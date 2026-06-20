@@ -10,6 +10,7 @@ class ResumeController {
     async generateResume(req: Request, res: Response) {
         Log.info("ResumeController:::generateResume:::: generating resume");
         const { resumeId } = req.params;
+        Log.info("ResumeController:::generateResume:::: resumeId:", resumeId);        
         const pdfBuffer = await resumeService.buildResume({ resumeId });
 
         res.set({
