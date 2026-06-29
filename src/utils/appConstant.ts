@@ -61,12 +61,26 @@ ONE-PAGE CONSTRAINT (NON-NEGOTIABLE):
 8. Keep the summary to 2-3 lines maximum.
 9. Use tight vertical spacing (margin/padding) between sections — no large gaps or empty space.
 
+QUANTIFY IMPACT (NON-NEGOTIABLE):
+10. Every work experience and project bullet point MUST include at least one quantifiable metric.
+    - If the user's data already has numbers, preserve and highlight them.
+    - If the user's data lacks numbers, intelligently infer realistic metrics based on the context:
+        * Engineering roles: estimate performance gains (e.g. "reduced latency by ~30%"), scale (e.g. "serving 10k+ users"), or throughput improvements.
+        * Leadership roles: team size, delivery timelines, cost savings.
+        * Use conservative, credible estimates — never fabricate extreme or unbelievable numbers.
+        * Prefix inferred metrics with "~" to indicate approximation (e.g. "~40% faster").
+    - Bullet format: [Strong Action Verb] + [What you did] + [Quantified Result].
+    - Examples of good bullets:
+        * "Architected microservices on AWS, reducing API response time by ~35% and supporting 50k+ daily requests."
+        * "Led a team of 4 engineers to deliver 3 product features on time, cutting customer churn by ~15%."
+        * "Optimized PostgreSQL queries, improving dashboard load time from 4s to under 800ms."
+
 ATS-FRIENDLY FORMATTING (NON-NEGOTIABLE):
-10. Plain single-column layout. NO tables, NO CSS grid/flexbox multi-column layouts, NO text boxes, NO images, NO icon fonts, NO emoji characters of any kind (including in contact info — use plain text separated by " | ", e.g. "+91-9876543210 | ananya.sharma@example.com").
-11. Use only web-safe fonts: Arial, Helvetica, or Calibri.
-12. Use real semantic HTML for structure: <h1> for name, <h2> for section headings (Summary, Skills, Experience, Projects, Education), <h3> for job/project/degree titles, <ul><li> for bullet points, <p> for paragraphs. Do not rely on visual styling alone to convey structure.
-13. Do not use headers, footers, or absolutely-positioned elements — content must flow in normal document order, top to bottom, as ATS parsers read linearly.
-14. Section order: Name & Contact Info, Summary, Skills, Experience, Projects, Education.
-15. Fix any messy phrasing or grammar in descriptions, transforming them into high-impact, professional bullet points using strong action verbs.
+11. Plain single-column layout. NO tables, NO CSS grid/flexbox multi-column layouts, NO text boxes, NO images, NO icon fonts, NO emoji characters of any kind (including in contact info — use plain text separated by " | ", e.g. "+91-9876543210 | ananya.sharma@example.com").
+12. Use only web-safe fonts: Arial, Helvetica, or Calibri.
+13. Use real semantic HTML for structure: <h1> for name, <h2> for section headings (Summary, Skills, Experience, Projects, Education), <h3> for job/project/degree titles, <ul><li> for bullet points, <p> for paragraphs. Do not rely on visual styling alone to convey structure.
+14. Do not use headers, footers, or absolutely-positioned elements — content must flow in normal document order, top to bottom, as ATS parsers read linearly.
+15. Section order: Name & Contact Info, Summary, Skills, Experience, Projects, Education.
+16. Fix any messy phrasing or grammar in descriptions, transforming them into high-impact, professional bullet points using strong action verbs.
 
 Output a complete, self-contained HTML document with all CSS inline in a <style> tag in the <head>, sized precisely for one A4 page.`;

@@ -21,6 +21,7 @@ export const LOG_FILE_PATH = process.env.LOG_FILE_PATH || 'logs/app.log';
 export const APPWRITE_ENDPOINT = process.env.APPWRITE_ENDPOINT;
 export const APPWRITE_PROJECT_ID = process.env.APPWRITE_PROJECT_ID;
 export const APPWRITE_API_KEY = process.env.APPWRITE_API_KEY;
+export const APPWRITE_BUCKET_ID= process.env.APPWRITE_BUCKET_ID;
 
 export const REDIS_HOST=process.env.REDIS_HOST || 'redis';
 export const REDIS_PORT=process.env.REDIS_PORT || 6379;
