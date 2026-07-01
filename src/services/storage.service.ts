@@ -1,4 +1,4 @@
-import { Client, Storage, ID } from "node-appwrite";
+import { Client, Storage, ID, Permission, Role } from "node-appwrite";
 import { InputFile } from "node-appwrite/file"; // Fixed submodule import
 import { Log } from "@/utils/logger";
 import { ISignedDownloadUrl, ISignedUploadUrl } from "@/interface/response/file.response";
@@ -41,7 +41,8 @@ class AppwriteStorageService {
         const file = await this.storage.createFile(
             this.bucketId,
             customFileId,
-            fileInput
+            fileInput,
+            [Permission.read(Role.any())]
         );
 
         // Appwrite doesn't natively use signed upload URLs for backend uploads.

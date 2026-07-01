@@ -23,10 +23,11 @@ class ResumeController {
 
     async generateAndStoreResume(req: Request, res: Response) {
         Log.info("ResumeController:::generateAndStoreResume:::: generating and storing resume");
-        const htmlData: string = req.body
+        const htmlData: string = req.body.htmlData;
+
         const { resumeId } = req.params;
         Log.info("ResumeController:::generateAndStoreResume:::: resumeId:", resumeId);
-        Log.info("ResumeController:::generateAndStoreResume:::: htmlData length:", htmlData);
+        Log.info("ResumeController:::generateAndStoreResume:::: htmlData length:", htmlData.length);
         const pdfBuffer = await resumeService.generateResumeFromHtmlAndStoreInS3(htmlData, resumeId);
         res.set({
             "Content-Type": "application/pdf",

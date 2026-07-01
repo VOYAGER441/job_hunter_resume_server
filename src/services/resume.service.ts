@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import resumeModel, { IResume } from "@/models/resume.model";
 import storageService from "./storage.service";
 import axios from "axios";
+import { AppError } from "@/error/AppError";
 
 class ResumeService {
     private client: Mistral;
@@ -26,7 +27,7 @@ class ResumeService {
             const resumeDbData = await this._getResumeDataFromDb(new mongoose.Types.ObjectId(resumeData.resumeId));
             if (!resumeDbData) {
                 Log.error("ResumeService::::: buildResume::::: no resume found in DB for id:", resumeData.resumeId);
-                throw new Error("Resume not found");
+                throw new AppError("Resume not found",utils.http.HttpStatusCodes.NOT_FOUND);
             }
             Log.info("ResumeService::::: buildResume::::: resume data retrieved from DB successfully");
 
@@ -47,7 +48,7 @@ class ResumeService {
         const resumeData = await this._getResumeDataFromDb(new mongoose.Types.ObjectId(resumeId));
         if (!resumeData) {
             Log.error("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: no resume found in DB for id:", resumeId);
-            throw new Error("Resume not found");
+            throw new AppError("Resume not found", utils.http.HttpStatusCodes.NOT_FOUND);
         }
 
         // build pdf
