@@ -27,7 +27,7 @@ class ResumeService {
             const resumeDbData = await this._getResumeDataFromDb(new mongoose.Types.ObjectId(resumeData.resumeId));
             if (!resumeDbData) {
                 Log.error("ResumeService::::: buildResume::::: no resume found in DB for id:", resumeData.resumeId);
-                throw new AppError("Resume not found",utils.http.HttpStatusCodes.NOT_FOUND);
+                throw new AppError("Resume not found", utils.http.HttpStatusCodes.NOT_FOUND);
             }
             Log.info("ResumeService::::: buildResume::::: resume data retrieved from DB successfully");
 
@@ -50,6 +50,7 @@ class ResumeService {
             Log.error("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: no resume found in DB for id:", resumeId);
             throw new AppError("Resume not found", utils.http.HttpStatusCodes.NOT_FOUND);
         }
+        const existingFileKey = resumeData.fileKey;
 
         // build pdf
         const pdfBuffer = await pdfService.generatePdfFromHtml(htmlContent);
@@ -64,6 +65,12 @@ class ResumeService {
         resumeData.publicUrl = publicUrl;
         await resumeModel.getDBModel().updateOne({ _id: new mongoose.Types.ObjectId(resumeId) }, resumeData);
         Log.info("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: resume data updated in DB successfully");
+
+        if (existingFileKey) {
+            Log.info("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: existing file found, deleting from storage");
+            await storageService.deleteObject(existingFileKey);
+            Log.info("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: existing file deleted from storage successfully");
+        }
 
         return pdfBuffer;
     }
