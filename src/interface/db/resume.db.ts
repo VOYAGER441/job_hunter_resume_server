@@ -29,9 +29,11 @@ export interface IExperience {
   techStack?: string[];
 }
 
-export interface IResume {
+export interface IResumeDb {
   _id: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId; // reference to IUser
+  fileKey: string;
+  publicUrl: string;
   name: string;
   phNumber: string;
   emailId: string;

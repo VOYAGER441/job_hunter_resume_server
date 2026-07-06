@@ -6,9 +6,11 @@ import { Mistral } from '@mistralai/mistralai';
 import sanitizeHtml from "sanitize-html";
 import pdfService from "./pdf.service";
 import { IResumeRequest } from "@/interface/request/resume.request";
-import { IResume } from "@/interface/db/resume.db";
 import mongoose from "mongoose";
-import resumeModel from "@/models/resume.model";
+import resumeModel, { IResume } from "@/models/resume.model";
+import storageService from "./storage.service";
+import axios from "axios";
+import { AppError } from "@/error/AppError";
 
 class ResumeService {
     private client: Mistral;
@@ -18,29 +20,60 @@ class ResumeService {
     }
 
     // #################### system function ###########################
-    async buildResume(resumeData: IResumeRequest): Promise<Buffer> {
+    async buildResume(resumeData: IResumeRequest): Promise<string> {
         Log.info("ResumeService::::: buildResume::::: building resume started");
         try {
             // call the db with id 
             const resumeDbData = await this._getResumeDataFromDb(new mongoose.Types.ObjectId(resumeData.resumeId));
             if (!resumeDbData) {
                 Log.error("ResumeService::::: buildResume::::: no resume found in DB for id:", resumeData.resumeId);
-                throw new Error("Resume not found");
+                throw new AppError("Resume not found", utils.http.HttpStatusCodes.NOT_FOUND);
             }
             Log.info("ResumeService::::: buildResume::::: resume data retrieved from DB successfully");
 
             const htmlContent = await this._callLlmForResumeHtml(resumeDbData);
             Log.info("ResumeService::::: buildResume::::: resume built successfully");
-            const pdfBuffer = await pdfService.generatePdfFromHtml(htmlContent);
-            Log.info("ResumeService::::: buildResume::::: PDF generated successfully");
-            return pdfBuffer;
+
+            return htmlContent;
         } catch (error) {
             Log.error("ResumeService::::: buildResume::::: error compiling resume", error);
             throw error;
         }
     }
 
+    async generateResumeFromHtmlAndStoreInS3(htmlContent: string, resumeId: string): Promise<Buffer> {
+        Log.info("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: generating and storing resume");
 
+        // check if resume exists in db
+        const resumeData = await this._getResumeDataFromDb(new mongoose.Types.ObjectId(resumeId));
+        if (!resumeData) {
+            Log.error("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: no resume found in DB for id:", resumeId);
+            throw new AppError("Resume not found", utils.http.HttpStatusCodes.NOT_FOUND);
+        }
+        const existingFileKey = resumeData.fileKey;
+
+        // build pdf
+        const pdfBuffer = await pdfService.generatePdfFromHtml(htmlContent);
+        Log.info("ResumeService::::: buildResume::::: PDF generated successfully");
+
+        // store in s3
+        // get url withoutkey 
+        const { objectKey, publicUrl } = await storageService.uploadObject(pdfBuffer, "application/pdf", "resumes", `resume_${resumeId}`);
+
+        // now update the resume data in db with fileKey and publicUrl
+        resumeData.fileKey = objectKey;
+        resumeData.publicUrl = publicUrl;
+        await resumeModel.getDBModel().updateOne({ _id: new mongoose.Types.ObjectId(resumeId) }, resumeData);
+        Log.info("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: resume data updated in DB successfully");
+
+        if (existingFileKey) {
+            Log.info("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: existing file found, deleting from storage");
+            await storageService.deleteObject(existingFileKey);
+            Log.info("ResumeService::::: generateResumeFromHtmlAndStoreInS3::::: existing file deleted from storage successfully");
+        }
+
+        return pdfBuffer;
+    }
     // #################### private function ###########################
     private async _callLlmForResumeHtml(data: IResume): Promise<string> {
         Log.info("ResumeService::::: _callLlmForResumeHtml::::: preparing LLM payload");

@@ -1,12 +1,13 @@
 {
-  "mcpServers": {
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
     "code-review-graph": {
-      "command": "code-review-graph",
-      "args": [
-        "serve"
-      ],
-      "type": "stdio",
+      "type": "local",
+      "command": ["code-review-graph", "serve"],
       "env": []
     }
-  }
+  },
+  "plugin": [
+    "@dietrichgebert/ponytail"
+  ]
 }
