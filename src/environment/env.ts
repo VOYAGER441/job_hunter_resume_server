@@ -21,12 +21,12 @@ export const LOG_FILE_PATH = process.env.LOG_FILE_PATH || 'logs/app.log';
 export const APPWRITE_ENDPOINT = process.env.APPWRITE_ENDPOINT;
 export const APPWRITE_PROJECT_ID = process.env.APPWRITE_PROJECT_ID;
 export const APPWRITE_API_KEY = process.env.APPWRITE_API_KEY;
-export const APPWRITE_BUCKET_ID= process.env.APPWRITE_BUCKET_ID;
+export const APPWRITE_BUCKET_ID = process.env.APPWRITE_BUCKET_ID;
 
-export const REDIS_HOST=process.env.REDIS_HOST || 'redis';
-export const REDIS_PORT=process.env.REDIS_PORT || 6379;
-export const REDIS_PASSWORD=process.env.REDIS_PASSWORD || 'your_redis_password';
-export const REDIS_DB=process.env.REDIS_DB || 0;
+export const REDIS_HOST = process.env.REDIS_HOST || 'redis';
+export const REDIS_PORT = process.env.REDIS_PORT || 6379;
+export const REDIS_PASSWORD = process.env.REDIS_PASSWORD || 'your_redis_password';
+export const REDIS_DB = process.env.REDIS_DB || 0;
 
 // jwt
 export const JWT_SECRET = process.env.JWT_SECRET || "default_secret_key";
@@ -37,7 +37,9 @@ export const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || "30d
 export const THEMUSE_API_URL = process.env.THEMUSE_API_URL;
 export const REMOTEOK_API_URL = process.env.REMOTEOK_API_URL;
 
-
 // LLM
 export const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
 export const MISTRAL_MODEL_NAME = process.env.MISTRAL_MODEL_NAME;
+
+// Internal service token
+export const INVOICE_SERVICE_INTERNAL_TOKEN = process.env.INVOICE_SERVICE_INTERNAL_TOKEN;
